@@ -361,32 +361,32 @@ async def rename(client, message):
     DELAY_BETWEEN_POSTS = 60  # 15 minutes in seconds
     deleted = 0
     try:
-        messages = []
+        # messages = []
         last_message_id = await db.get_skip_msg_id()  # Start fetching from the most recent message
         print(f"The last message id got => {last_message_id}")
         async with lock:
             # Fetch messages in reverse order
-            async for msg in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id):
-                if msg:  # Collect valid messages
-                    messages.append(msg)
-                    last_message_id = msg.id  # Update the last processed message ID
-                else:
-                    break  # Exit the loop if no messages are left
+            async for msg in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id, reverse=True):
+            #     if msg:  # Collect valid messages
+            #         messages.append(msg)
+            #         last_message_id = msg.id  # Update the last processed message ID
+            #     else:
+            #         break  # Exit the loop if no messages are left
 
-            print(f"✅ Total messages collected: {len(messages)}")
+            # print(f"✅ Total messages collected: {len(messages)}")
 
-            # Step 2: Sort messages in ascending order of message_id
-            messages.sort(key=lambda m: m.id)
+            # # Step 2: Sort messages in ascending order of message_id
+            # messages.sort(key=lambda m: m.id)
 
             # Step 3: Forward messages in ascending order
-            for msg in messages:
-                if message.empty:
+            # for msg in messages:
+                if msg.empty:
                     deleted += 1
                     continue
                 
                 for channel_id in CHANNELS:
                     try:
-                        await lazy_userbot.copy_message(chat_id=channel_id, from_chat_id=MAIN_POST_CHANNEL, message_id=msg.id)
+                        await lazy_userbot.send_message(channel_id, msg.text, file=msg.id)
                         print(f"✅ Forwarded message ID {msg.id} to channel {channel_id}")
                         await asyncio.sleep(1)  # Short delay between channels
                     except Exception as e:
