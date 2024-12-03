@@ -1,5 +1,5 @@
 import asyncio
-from pyrogram import filters, Client
+from pyrogram import filters, Client, enums
 from config import *
 from lazydeveloperr.database import db 
 from asyncio.exceptions import TimeoutError
@@ -394,7 +394,23 @@ async def rename(client, message):
                         # elif msg.media:
                         #     await lazy_userbot.send_file(channel_id, msg.media, caption=msg.text or "")
                             # print(f"✅ Forwarded media message ID {msg.id} to channel {channel_id}")
-                        await client.copy_message(chat_id=channel_id, from_chat_id=MAIN_POST_CHANNEL, message_id=msg.id)
+                        await lazy_userbot.forward_messages(channel_id, msg.id, MAIN_POST_CHANNEL)
+                        print('sethod 1 done')
+                        try:
+                            if msg.text and not msg.media:
+                                # Send text-only messages
+                                await lazy_userbot.send_message(entity=channel_id, message=msg.text, parse_mode=enums.ParseMode.HTML)
+                                print('sethod 2 done')
+                                
+                            elif msg.media: 
+                                # Send media with or without captions
+                                await lazy_userbot.send_file(entity=channel_id, file=msg.media, caption=msg.text or "",  parse_mode=enums.ParseMode.HTML)
+                                print('sethod 3 done')
+                        except Exception as e:
+                            print(f"error =>>>>>>>>> {e}")
+                            pass
+
+                        # await client.copy_message(chat_id=channel_id, from_chat_id=MAIN_POST_CHANNEL, message_id=msg.id, parse_mode=enums.ParseMode.HTML)
                         print(f"✅ Forwarded message ID {msg.id} to channel {channel_id}")
                         await asyncio.sleep(1)  # Short delay between channels
                     except Exception as e:
