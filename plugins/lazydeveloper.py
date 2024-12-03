@@ -380,9 +380,9 @@ async def rename(client, message):
 
             # Step 3: Forward messages in ascending order
             # for msg in messages:
-                if msg.empty:
-                    deleted += 1
-                    continue
+                # if msg.empty:
+                #     deleted += 1
+                #     continue
                 
                 for channel_id in CHANNELS:
                     try:
