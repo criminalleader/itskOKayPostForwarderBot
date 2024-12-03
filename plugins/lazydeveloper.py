@@ -386,15 +386,15 @@ async def rename(client, message):
                 
                 for channel_id in CHANNELS:
                     try:
-                        if msg.text:
-                            await lazy_userbot.send_message(channel_id, msg.text)
-                            print(f"✅ Forwarded text message ID {msg.id} to channel {channel_id}")
+                        # if msg.text:
+                        #     await lazy_userbot.send_message(channel_id, msg.text)
+                        #     print(f"✅ Forwarded text message ID {msg.id} to channel {channel_id}")
                         
-                        # Check if the message has media (photo, video, document, etc.)
-                        elif msg.media:
-                            await lazy_userbot.send_file(channel_id, msg.media, caption=msg.text or "")
-                            print(f"✅ Forwarded media message ID {msg.id} to channel {channel_id}")
-                        # await client.copy_message(chat_id=channel_id, from_chat_id=MAIN_POST_CHANNEL, message_id=msg.id)
+                        # # Check if the message has media (photo, video, document, etc.)
+                        # elif msg.media:
+                        #     await lazy_userbot.send_file(channel_id, msg.media, caption=msg.text or "")
+                            # print(f"✅ Forwarded media message ID {msg.id} to channel {channel_id}")
+                        await client.copy_message(chat_id=channel_id, from_chat_id=MAIN_POST_CHANNEL, message_id=msg.id)
                         print(f"✅ Forwarded message ID {msg.id} to channel {channel_id}")
                         await asyncio.sleep(1)  # Short delay between channels
                     except Exception as e:
