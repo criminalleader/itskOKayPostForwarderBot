@@ -385,7 +385,6 @@ async def rename(client, message):
 
             # Fetch messages in reverse order
             async for msg in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id, reverse=True):
-                print(f"Total message {len(msg)}")
                 in_queue -= 1
                 print(f"Current Queue => {in_queue}")
                 for channel_id in CHANNELS:
@@ -396,12 +395,12 @@ async def rename(client, message):
                             if msg.text and not msg.media:
                                 # Send text-only messages
                                 await lazy_userbot.send_message(entity=channel_id, message=msg.text, parse_mode='html')
-                                print('sethod 2 done')
+                                print('method 2 done')
                                 
                             elif msg.media: 
                                 # Send media with or without captions
                                 await lazy_userbot.send_file(entity=channel_id, file=msg.media, caption=msg.text or "",  parse_mode='html')
-                                print('sethod 3 done')
+                                print('method 3 done')
                         except Exception as e:
                             print(f"error =>>>>>>>>> {e}")
                             pass
