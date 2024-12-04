@@ -354,61 +354,62 @@ async def rename(client, message):
 
     # Iterating through messages
     MAIN_POST_CHANNEL = target_chat_id  # Replace with your MAIN_POST_CHANNEL ID
-    # CHANNELS = [
-    #     -1001111111111, -1002222222222, -1003333333333,  # Replace with your channel IDs
-    #     # Add up to 100 channel IDs here
-    # ]
     DELAY_BETWEEN_POSTS = 60  # 15 minutes in seconds
     deleted = 0
+    total_messages = 0
     try:
         # messages = []
         last_message_id = await db.get_skip_msg_id()  # Start fetching from the most recent message
         print(f"The last message id got => {last_message_id}")
         async with lock:
+            # running first loop to show realtime update
+            async for _ in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id):
+                total_messages += 1
+
+            print(f"Total messages to forward: {total_messages}")
+            
+            if total_messages == 0:
+                # If no messages to process, inform the user immediately
+                await message.reply("✅ No new messages to forward.")
+                return
+
+            print(f"Total messages to forward: {total_messages}")
+            sent_count = 0
+            in_queue = total_messages
+            progress_message = await client.send_message(
+                message.chat_id,
+                f"<blockquote>🍿 Total Sent => {sent_count}/{total_messages}</blockquote>\n<blockquote>⏳ In-Queue => {in_queue}</blockquote>"
+            )
+
+
+
             # Fetch messages in reverse order
             async for msg in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id, reverse=True):
-            #     if msg:  # Collect valid messages
-            #         messages.append(msg)
-            #         last_message_id = msg.id  # Update the last processed message ID
-            #     else:
-            #         break  # Exit the loop if no messages are left
-
-            # print(f"✅ Total messages collected: {len(messages)}")
-
-            # # Step 2: Sort messages in ascending order of message_id
-            # messages.sort(key=lambda m: m.id)
-
-            # Step 3: Forward messages in ascending order
-            # for msg in messages:
-                # if msg.empty:
-                #     deleted += 1
-                #     continue
-                
+                print(f"Total message {len(msg)}")
                 for channel_id in CHANNELS:
                     try:
-                        # if msg.text:
-                        #     await lazy_userbot.send_message(channel_id, msg.text)
-                        #     print(f"✅ Forwarded text message ID {msg.id} to channel {channel_id}")
-                        
-                        # # Check if the message has media (photo, video, document, etc.)
-                        # elif msg.media:
-                        #     await lazy_userbot.send_file(channel_id, msg.media, caption=msg.text or "")
-                            # print(f"✅ Forwarded media message ID {msg.id} to channel {channel_id}")
                         await lazy_userbot.forward_messages(channel_id, msg.id, MAIN_POST_CHANNEL)
                         print('sethod 1 done')
+                        in_queue -= 1
                         try:
                             if msg.text and not msg.media:
                                 # Send text-only messages
-                                await lazy_userbot.send_message(entity=channel_id, message=msg.text, parse_mode=enums.ParseMode.HTML)
+                                await lazy_userbot.send_message(entity=channel_id, message=msg.text, parse_mode='html')
                                 print('sethod 2 done')
                                 
                             elif msg.media: 
                                 # Send media with or without captions
-                                await lazy_userbot.send_file(entity=channel_id, file=msg.media, caption=msg.text or "",  parse_mode=enums.ParseMode.HTML)
+                                await lazy_userbot.send_file(entity=channel_id, file=msg.media, caption=msg.text or "",  parse_mode='html')
                                 print('sethod 3 done')
                         except Exception as e:
                             print(f"error =>>>>>>>>> {e}")
                             pass
+                        # work after sending message :
+
+                        sent_count += 1
+                        progress_percentage = (sent_count/total_messages) * 100
+                        
+                        await progress_message.edit_text(f"<blockquote>🍿 Total Sent => {sent_count}/{total_messages}</blockquote>\n<blockquote>⏳ In-Queue => {in_queue}</blockquote>\n<blockquote>🚀 PROGRESS => {progress_percentage:.2f}%</blockquote>", parse_mode=enums.ParseMode.HTML)
 
                         # await client.copy_message(chat_id=channel_id, from_chat_id=MAIN_POST_CHANNEL, message_id=msg.id, parse_mode=enums.ParseMode.HTML)
                         print(f"✅ Forwarded message ID {msg.id} to channel {channel_id}")
@@ -418,8 +419,10 @@ async def rename(client, message):
 
                 # Delay before processing the next message
                 await db.set_skip_msg_id(msg.id)
-                print(f"⏳ Waiting {DELAY_BETWEEN_POSTS} minutes before processing the next post.")
-                await asyncio.sleep(DELAY_BETWEEN_POSTS)
+                if in_queue > 0:
+                    print(f"⏳ Waiting {DELAY_BETWEEN_POSTS} seconds before processing the next post.")
+                    await asyncio.sleep(DELAY_BETWEEN_POSTS)
+
 
         await message.reply(f"✅ All messages from MAIN_POST_CHANNEL have been forwarded in ascending order.\nDeleted messages fetched : {deleted}")
 
