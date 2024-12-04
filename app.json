@@ -1,8 +1,7 @@
 {
-    "name": "Auto Renamer Bot",
+    "name": "Auto Post Forwarder Bot",
     "description": "Telegram Auto File Renamer Bot ",
-    "keywords": ["Renamer Bot", "Mongo DB"],    
-    "repository": "https://github.com/moviesbysimplifytuberbot/AutoRenameBOT",
+    "keywords": ["Post Forwarder BOT", "Mongo DB"],    
     "env": {
         "API_ID": {
             "description": "Your APP ID From my.telegram.org ",

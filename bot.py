@@ -9,14 +9,14 @@ class Bot(Client):
 
     def __init__(self):
         super().__init__(
-            name="renamer",
+            name="postforwarder",
             api_id=API_ID,
             api_hash=API_HASH,
             bot_token=BOT_TOKEN,
             workers=200,
             plugins={"root": "plugins"},
             sleep_threshold=15,
-            max_concurrent_transmissions=5,
+            max_concurrent_transmissions=100,
         )
     # the one and only - LazyDeveloperr ❤
     async def start(self):
@@ -37,7 +37,7 @@ class Bot(Client):
         await app.setup()
         bind_address = "0.0.0.0"       
         await web.TCPSite(app, bind_address, PORT).start()     
-        print(f"{me.first_name} 𝚂𝚃𝙰𝚁𝚃𝙴𝙳 ⚡️⚡️⚡️")
+        print(f"| ❤ |==> ʟᴀᴢʏᴅᴇᴠᴇʟᴏᴘᴇʀʀ ɪɴɪᴛɪᴀᴛᴇᴅ {me.first_name} <==| 🍿 |")
       
 
     async def stop(self, *args):

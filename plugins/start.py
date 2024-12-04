@@ -11,15 +11,15 @@ async def start(client, message):
     user = message.from_user
     if not await db.is_user_exist(user.id):
         await db.add_user(user.id)             
-    txt=f"👋 Hey {user.mention} \nɪ'ᴍ ᴀɴ ᴀᴅᴠᴀɴᴄᴇ ғɪʟᴇ ʀᴇɴᴀᴍᴇʀ + ғɪʟᴇ ᴛᴏ ᴠɪᴅᴇᴏ ᴄᴏɴᴠᴇʀᴛᴇʀ ʙᴏᴛ ᴡɪᴛʜ ᴘᴇʀᴍᴀɴᴇɴᴛ ᴛʜᴜᴍʙɴᴀɪʟ & ᴄᴜsᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ sᴜᴘᴘᴏʀᴛ!\n\n♥ ʙᴇʟᴏᴠᴇᴅ ᴏᴡɴᴇʀ <a href='https://telegram.me/Simplifytuber2'>ʏᴀsʜ ɢᴏʏᴀʟ</a> 🍟"
+    txt=f"""👋 Hey {message.from_user.mention} \nɪ'ᴍ ᴀɴ ᴀᴅᴠᴀɴᴄᴇ ᴀᴜᴛᴏ ᴘᴏsᴛ ғᴏʀᴡᴀʀᴅᴇʀ ʙᴏᴛ. ɪ ᴄᴀɴ ғᴏʀᴡᴀʀᴅ ᴘᴏsᴛ ᴛᴏ ᴜɴʟɪᴍɪᴛᴇᴅ ᴄʜᴀɴɴᴇʟs ɪɴ sᴘᴇᴄɪғɪᴇᴅ ᴛɪᴍᴇ ɪɴᴛᴇʀᴠᴀʟ.\n\n<blockquote>♥ ʙᴇʟᴏᴠᴇᴅ ᴏᴡɴᴇʀ <a href='https://telegram.me/Legend_Moon'>💴Legend💰💳</a> 🍟</blockquote>""",
     button=InlineKeyboardMarkup([[
         InlineKeyboardButton("✿.｡:☆ ᴏᴡɴᴇʀ ⚔ ᴅᴇᴠs ☆:｡.✿", callback_data='dev')
         ],[
-        InlineKeyboardButton('📢 ᴜᴘᴅᴀᴛᴇs §', url='https://t.me/botupdatesimplifytuber'),
-        InlineKeyboardButton('🍂 sᴜᴘᴘᴏʀᴛ §', url='https://t.me/bysimplifytuber')
+        InlineKeyboardButton('📢 ᴜᴘᴅᴀᴛᴇs ', url='https://t.me/LazyDeveloper'),
+        InlineKeyboardButton('🍂 sᴜᴘᴘᴏʀᴛ ', url='https://t.me/LazyDeveloper')
         ],[
-        InlineKeyboardButton('🍃 ᴀʙᴏᴜᴛ §', callback_data='about'),
-        InlineKeyboardButton('ℹ ʜᴇʟᴘ §', callback_data='help')
+        InlineKeyboardButton('🍃 ᴀʙᴏᴜᴛ ', callback_data='about'),
+        InlineKeyboardButton('ℹ ʜᴇʟᴘ ', callback_data='help')
         ]])
     if START_PIC:
         await message.reply_photo(START_PIC, caption=txt, reply_markup=button)       
@@ -32,12 +32,12 @@ async def cb_handler(client, query: CallbackQuery):
     data = query.data 
     if data == "start":
         await query.message.edit_text(
-            text=f"""👋 Hey {query.from_user.mention} \nɪ'ᴍ ᴀɴ ᴀᴅᴠᴀɴᴄᴇ ғɪʟᴇ ʀᴇɴᴀᴍᴇʀ + ғɪʟᴇ ᴛᴏ ᴠɪᴅᴇᴏ ᴄᴏɴᴠᴇʀᴛᴇʀ ʙᴏᴛ ᴡɪᴛʜ ᴘᴇʀᴍᴀɴᴇɴᴛ ᴛʜᴜᴍʙɴᴀɪʟ & ᴄᴜsᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ sᴜᴘᴘᴏʀᴛ!\n\n♥ ʙᴇʟᴏᴠᴇᴅ ᴏᴡɴᴇʀ <a href='https://telegram.me/Simplifytuber2'>ʏᴀsʜ ɢᴏʏᴀʟ</a> 🍟""",
+            text=f"""👋 Hey {query.from_user.mention} \nɪ'ᴍ ᴀɴ ᴀᴅᴠᴀɴᴄᴇ ᴀᴜᴛᴏ ᴘᴏsᴛ ғᴏʀᴡᴀʀᴅᴇʀ ʙᴏᴛ. ɪ ᴄᴀɴ ғᴏʀᴡᴀʀᴅ ᴘᴏsᴛ ᴛᴏ ᴜɴʟɪᴍɪᴛᴇᴅ ᴄʜᴀɴɴᴇʟs ɪɴ sᴘᴇᴄɪғɪᴇᴅ ᴛɪᴍᴇ ɪɴᴛᴇʀᴠᴀʟ.\n\n<blockquote>♥ ʙᴇʟᴏᴠᴇᴅ ᴏᴡɴᴇʀ <a href='https://telegram.me/Legend_Moon'>💴Legend💰💳</a> 🍟</blockquote>""",
             reply_markup=InlineKeyboardMarkup( [[
                 InlineKeyboardButton("✿.｡:☆ ᴏᴡɴᴇʀ ⚔ ᴅᴇᴠs ☆:｡.✿", callback_data='dev')
                 ],[
-                InlineKeyboardButton('📢 ᴜᴘᴅᴀᴛᴇs ', url='https://t.me/botupdatesimplifytuber'),
-                InlineKeyboardButton('🍂 sᴜᴘᴘᴏʀᴛ ', url='https://t.me/bysimplifytuber')
+                InlineKeyboardButton('📢 ᴜᴘᴅᴀᴛᴇs ', url='https://t.me/LazyDeveloper'),
+                InlineKeyboardButton('🍂 sᴜᴘᴘᴏʀᴛ ', url='https://t.me/LazyDeveloper')
                 ],[
                 InlineKeyboardButton('🍃 ᴀʙᴏᴜᴛ ', callback_data='about'),
                 InlineKeyboardButton('ℹ ʜᴇʟᴘ ', callback_data='help')
