@@ -363,7 +363,7 @@ async def rename(client, message):
         print(f"The last message id got => {last_message_id}")
         async with lock:
             # running first loop to show realtime update
-            async for _ in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id):
+            async for _ in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id, reverse=True):
                 total_messages += 1
 
             print(f"Total messages to forward: {total_messages}")
@@ -377,7 +377,7 @@ async def rename(client, message):
             sent_count = 0
             in_queue = total_messages
             progress_message = await client.send_message(
-                message.chat_id,
+                user_id,
                 f"<blockquote>🍿 Total Sent => {sent_count}/{total_messages}</blockquote>\n<blockquote>⏳ In-Queue => {in_queue}</blockquote>"
             )
 
@@ -386,11 +386,12 @@ async def rename(client, message):
             # Fetch messages in reverse order
             async for msg in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id, reverse=True):
                 print(f"Total message {len(msg)}")
+                in_queue -= 1
+                print(f"Current Queue => {in_queue}")
                 for channel_id in CHANNELS:
                     try:
                         await lazy_userbot.forward_messages(channel_id, msg.id, MAIN_POST_CHANNEL)
                         print('sethod 1 done')
-                        in_queue -= 1
                         try:
                             if msg.text and not msg.media:
                                 # Send text-only messages
