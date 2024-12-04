@@ -387,14 +387,13 @@ async def rename(client, message):
                 lazydeveloper.POST_PROGRESS.format(sent_count, total_messages, in_queue, 0)
             )
 
-
-
             # Fetch messages in reverse order
             async for msg in lazy_userbot.iter_messages(MAIN_POST_CHANNEL, offset_id=last_message_id, reverse=True):
                 in_queue -= 1
-                main_post_link = f"<a href='{msg.link}'>ʟɪɴᴋ</a>"
-                link = msg.link
-                print(link)
+                final_chat = str(MAIN_POST_CHANNEL)[4:]
+                main_post_link = f"<a href='https://telegram.me/C/{final_chat}/{msg.id}'>ʟɪɴᴋ</a>"
+                print(final_chat)
+                print(main_post_link)
                 print(f"Current Queue => {in_queue}")
                 for channel_id in CHANNELS:
                     try:
@@ -415,9 +414,9 @@ async def rename(client, message):
                         #     pass
 
                         # await client.copy_message(chat_id=channel_id, from_chat_id=MAIN_POST_CHANNEL, message_id=msg.id, parse_mode=enums.ParseMode.HTML)
-                        
-                        forward_post_link = f"<a href='{fd.link}'>ʟɪɴᴋ</a>"
-                        print(f"✅ Forwarded message ID {msg.id} to channel {channel_id}")
+                        fd_final_chat = str(channel_id)[:4]
+                        forward_post_link = f"<a href='https://telegram.me/c/fd_final_chat/{fd.id}'>ʟɪɴᴋ</a>"
+                        print(f"✅ Forwarded message ID {msg.id} to channel {channel_id} |=> chatid =>{fd_final_chat} |=> fd link {forward_post_link}")
 
                         await channel_progress.edit_text(lazydeveloper.CHANNEL_PROGRESS.format(channel_id, msg.id, main_post_link, forward_post_link  ), parse_mode=enums.ParseMode.HTML)
                         await asyncio.sleep(1)  # Short delay between channels
