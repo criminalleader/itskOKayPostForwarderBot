@@ -40,7 +40,7 @@ broadcast - admin only
 
 
 ## 👌 Owner 
-<a href="https://telegram.me/Simplifytuber2">
+<!-- <a href="https://telegram.me/Simplifytuber2">
    <p>👑 ʏᴀsʜ ɢᴏʏᴀʟ 👑</p>
-  </a>
+</a> -->
 

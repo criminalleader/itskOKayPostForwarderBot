@@ -20,7 +20,11 @@ START_PIC = os.environ.get("START_PIC", "https://i.ibb.co/rv8Lds3/ALL-RENAMER-LO
 
 ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '5965340120 6126812037').split()]
 
-CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in os.environ.get('CHANNELS', '-1002325465716 -1002249141765 -1002317508473 -1002473112911 -1002450859981').split()]
+CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in os.environ.get('CHANNELS', '-1002203580989 -1002187539529 -1002206078888 -1002176451887').split()]
+
+CHANNEL_LINK1 = os.environ.get("CHANNEL_LINK1", "https://t.me/LazyDeveloper")
+
+CHANNEL_LINK2 = os.environ.get("CHANNEL_LINK2", "https://t.me/LazyDeveloper")
 
 PORT = os.environ.get('PORT', '8080')
 

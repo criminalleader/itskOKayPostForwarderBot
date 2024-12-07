@@ -133,7 +133,7 @@ async def connect_session(bot, msg):
             print("Session is disconnected successfully!")
         else:
             print("Session is still connected.")
-        await init.edit_text("with ❤ @Simplifytuber2", parse_mode=enums.ParseMode.HTML)
+        await init.edit_text("with ❤ @---", parse_mode=enums.ParseMode.HTML)
         return
 
 @Client.on_message(filters.private & filters.command("get_session"))
@@ -308,7 +308,7 @@ async def generate_session(bot, msg):
             print("Session is disconnected successfully!")
         else:
             print("Session is still connected.")
-        await init.edit_text("with ❤ @Simplifytuber2", parse_mode=enums.ParseMode.HTML)
+        await init.edit_text("with ❤ @---", parse_mode=enums.ParseMode.HTML)
         return
 
 
@@ -398,6 +398,7 @@ async def rename(client, message):
     MAIN_POST_CHANNEL = target_chat_id  # Replace with your MAIN_POST_CHANNEL ID
     DELAY_BETWEEN_POSTS = 60  # 15 minutes in seconds
     total_messages = 0
+    
     try:
         # messages = []
         last_message_id = await db.get_skip_msg_id()  # Start fetching from the most recent message
@@ -434,6 +435,7 @@ async def rename(client, message):
                 final_chat = str(MAIN_POST_CHANNEL)[4:]
                 main_post_link = f"<a href='https://telegram.me/c/{final_chat}/{msg.id}'>ʟɪɴᴋ</a>"
                 print(f"Current Queue => {in_queue}")
+                channel_caption = f"\n\n⚡Join: {CHANNEL_LINK1}\n⚡Join: {CHANNEL_LINK2}"
                 for channel_id in CHANNELS:
                     try:
                         fd = await lazy_userbot.forward_messages(channel_id, msg.id, MAIN_POST_CHANNEL)
