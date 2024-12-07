@@ -18,7 +18,7 @@ FLOOD = int(os.environ.get("FLOOD", "10"))
 
 START_PIC = os.environ.get("START_PIC", "https://i.ibb.co/rv8Lds3/ALL-RENAMER-LOGO-YASH-GOYAL.jpg")
 
-ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '5965340120 6126812037').split()]
+ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '5965340120 6126812037 6864533113').split()]
 
 CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in os.environ.get('CHANNELS', '-1002203580989 -1002187539529 -1002206078888 -1002176451887').split()]
 
